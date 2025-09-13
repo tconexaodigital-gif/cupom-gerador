@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desconto Surpresa!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #6a11cb;
+        }
+        
+        .loading {
+            margin: 30px 0;
+        }
+        
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #6a11cb;
+            border-radius: 50%;
+            margin: 0 auto;
+            animation: spin 1.5s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .result {
+            display: none;
+        }
+        
+        h1 {
+            color: #6a11cb;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .parabens {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        
+        .cupom {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed #ff6b6b;
+        }
+        
+        .cupom::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            z-index: -1;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            filter: blur(15px);
+            opacity: 0.5;
+        }
+        
+        .cupom-percentual {
+            font-size: 52px;
+            font-weight: bold;
+            color: #d35400;
+            margin: 10px 0;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+        }
+        
+        .cupom-descricao {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .observacao {
+            background-color: #fff4e5;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffa502;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .pagamento-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .pagamento-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            color: #636e72;
+        }
+        
+        .pagamento-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #6a11cb;
+        }
+        
+        .instagram {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 2px solid #f1f2f6;
+        }
+        
+        .segue-texto {
+            margin-bottom: 15px;
+            color: #7f8c8d;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .instagram-link {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 18px;
+        }
+        
+        .instagram-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(188, 24, 136, 0.4);
+        }
+        
+        .instagram-icon {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        .valor-minimo {
+            font-size: 16px;
+            color: #636e72;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .cupom-percentual {
+                font-size: 42px;
+            }
+            
+            .instagram-link {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🛍️ LOJA CONEXÃO DIGITAL</div>
+        
+        <div class="loading" id="loading">
+            <div class="loader"></div>
+            <p class="loading-text">Carregando o seu cupom...</p>
+        </div>
+        
+        <div class="result" id="result">
+            <h1>Desconto Surpresa!</h1>
+            
+            <p class="parabens">VOCÊ GANHOU, PARABÉNS!</p>
+            
+            <div class="cupom">
+                <p>O SEU CUPOM É DE:</p>
+                <p class="cupom-percentual" id="percentual">10%</p>
+                <p class="cupom-descricao">DE DESCONTO</p>
+            </div>
+            
+            <div class="observacao">
+                <p><i class="fas fa-exclamation-circle"></i> CUPOM VÁLIDO APENAS PARA PAGAMENTO À VISTA</p>
+            </div>
+            
+            <div class="pagamento-list">
+                <div class="pagamento-item">
+                    <div class="pagamento-icon">💵</div>
+                    <span>DINHEIRO</span>
+                </div>
+                <div class="pagamento-item">
+                    <div class="pagamento-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <span>PIX</span>
+                </div>
+                <div class="pagamento-item">
+                    <div class="pagamento-icon"><i class="fas fa-credit-card"></i></div>
+                    <span>DÉBITO</span>
+                </div>
+                <div class="pagamento-item">
+                    <div class="pagamento-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <span>TRANSFERÊNCIA</span>
+                </div>
+            </div>
+            
+            <div class="instagram">
+                <p class="segue-texto">Siga a nossa loja nas redes sociais</p>
+                <!-- Substitua pelo link real do Instagram da sua loja -->
+                <a href="https://www.instagram.com/lojaconexaodigital" class="instagram-link" target="_blank">
+                    <i class="fab fa-instagram instagram-icon"></i> SEGUIR NO INSTAGRAM
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array com os possíveis cupons (5%, 8% e 10%)
+        const cupons = [5, 8, 10];
+        
+        // Simula o carregamento do cupom
+        setTimeout(function() {
+            // Sorteia um cupom aleatório
+            const cupomSorteado = cupons[Math.floor(Math.random() * cupons.length)];
+            
+            // Esconde a animação de carregamento
+            document.getElementById('loading').style.display = 'none';
+            
+            // Atualiza o percentual do cupom
+            document.getElementById('percentual').textContent = cupomSorteado + '%';
+            
+            // Exibe o resultado
+            document.getElementById('result').style.display = 'block';
+        }, 3000); // 3 segundos de "carregamento"
+    </script>
+</body>
+</html>
